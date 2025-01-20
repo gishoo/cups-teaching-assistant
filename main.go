@@ -5,37 +5,23 @@ import (
 	"net/http"
 )
 
-func homeHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-type", "text html; charset=utf-8")
-	fmt.Fprint(w, "Home")
-}
-
-func voteHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-type", "text html; charset=utf-8")
-	fmt.Fprint(w, "vote")
-}
-
-func resultHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-type", "text html; charset=utf-8")
-	fmt.Fprint(w, "result")
-}
-
-func instructorHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-type", "text html; charset=utf-8")
-	fmt.Fprint(w, "instructor")
-}
-
-func adminHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-type", "text html; charset=utf-8")
-	fmt.Fprint(w, "admin")
+func routeHandler(w http.ResponseWriter, r *http.Request) {
+	switch r.URL.Path {
+	case "/":
+		fmt.Fprint(w, "home")
+	case "/vote":
+		fmt.Fprint(w, "vote")
+	case "/result":
+		fmt.Fprint(w, "result")
+	case "/instructor":
+		fmt.Fprint(w, "instructor")
+	case "/admin":
+		fmt.Fprint(w, "admin")
+	}
 }
 
 func main() {
-	http.HandleFunc("/", homeHandler)
-	http.HandleFunc("/vote", voteHandler)
-	http.HandleFunc("/result", resultHandler)
-	http.HandleFunc("/instructor", instructorHandler)
-	http.HandleFunc("/admin", adminHandler)
+	http.HandleFunc("/", routeHandler)
 
 	fmt.Println("Starting Server on Port: 3000")
 	http.ListenAndServe(":3000", nil)
